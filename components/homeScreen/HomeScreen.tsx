@@ -1,20 +1,30 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Alert } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { styles } from './styles';
 
 import React  from 'react'
+import SurvivalCard from '../survivalCrad/SurvivalCard';
 
-const HomeScreen = () => {
+interface HomeProps {
+  nombrePersonaje: string;
+  dificultad: 'Facil' | 'Medio' | 'Dificil';
+  puntosVida?: number;
+}
+
+const manejarPressionarPuerta  = (objeto: string) => {
+  Alert.alert(
+    'Interacción',`Has abierto la ${objeto}`
+  )
+}
+
+const HomeScreen = ({ nombrePersonaje, dificultad, puntosVida}: HomeProps) => {
     const [abierta, setAbierta] = useState(false);
       return (
         <View style={styles.container}>
-        <View style={styles.card}>
-            <Text style={styles.text}>{abierta ? 'Las puertas estan abiertas!' : 'Una ves mas has entrado al mundo del survival horror! Buena suerte!! La necesitaras!'}</Text>
-            <Text style={styles.text}></Text>
-            <Pressable onPress={() => setAbierta(!abierta)}>
-            <Image source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXOpcJGRYDf4CAmlc3utKLOBBfCzFsjXOOWQ&s'}} style={styles.door} />
-            </Pressable>
-        </View>
+          <Text style={styles.text}>Bienvenido {nombrePersonaje}</Text>
+          <Text style={styles.text}>Dificultad: {dificultad}</Text>
+          <Text style={styles.text}>Puntos de vida: {puntosVida}</Text>
+          <SurvivalCard mensaje="Una vez más has entrado al mundo del survival horror..." alPresionar={manejarPressionarPuerta}/>
         </View>
     );
 }
